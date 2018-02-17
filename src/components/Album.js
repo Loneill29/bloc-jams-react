@@ -95,7 +95,11 @@ formatTime(timeInSeconds) {
   const remainingSeconds = Math.floor(timeInSeconds%60);
   if (typeof timeInSeconds !== 'number') {
     return "--:--"
-  } else return `${(timeInMinutes)}:${(remainingSeconds)}`
+  } else if
+    (remainingSeconds < 10) {
+    return `${(timeInMinutes)}:0${(remainingSeconds)}`
+      }
+  else return `${(timeInMinutes)}:${(remainingSeconds)}`
 }
 
   render() {
