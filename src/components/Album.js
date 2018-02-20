@@ -15,7 +15,8 @@ class Album extends Component {
     currentSong: album.songs[0],
     currentTime: 0,
     duration: album.songs[0].duration,
-    isPlaying: false
+    isPlaying: false,
+    isHovered: false
   };
 
   this.audioElement = document.createElement('audio');
@@ -61,10 +62,19 @@ handleSongClick(song) {
   const isSameSong = this.state.currentSong == song;
   if (this.state.isPlaying && isSameSong) {
     this.pause();
+
   } else {
     if (!isSameSong) { this.setSong(song); }
     this.play();
   }
+}
+
+songDisplay(song) {
+  const isSameSong = this.state.currentSong == song;
+  if (this.state.isPlaying && isSameSong) {
+    return 'ion-pause';
+  } else if (this.isHovered) {return 'ion-play'
+} else return 'song-number'
 }
 
 handlePrevClick() {
@@ -123,13 +133,23 @@ formatTime(timeInSeconds) {
 
          <tbody>
             {this.state.album.songs.map( (song, index) =>
-              <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
+              <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
+                    onMouseEnter={() => this.setState({isHovered: index+1})}
+                    onMouseLeave={() => this.setState({isHovered: false})}>
                   <td className="song-actions">
-                  <button>
-                   <span className="song-number">{index+1}</span>
-                   <span className="ion-play"></span>
-                   <span className="ion-pause"></span>
-                 </button>
+
+                  <button id="song-action-btns" className="mdl-button mdl-js-button mdl-button--accent">
+                  <i className="material-icons">play</i>
+                           { (this.state.currentSong.title === song.title) ?
+                           <span className={this.state.isPlaying ? "ion-pause" : "ion-play"}></span>
+                           :
+                           (this.state.isHovered === index+1) ?
+                           <span className="ion-play"></span>
+                           :
+                           <span className="song-number">{index+1}</span>
+                          }
+                   </button>
+
                   </td>
                 <td className="song-title">{song.title}</td>
                 <td className="song-duration">{this.formatTime(song.duration)}</td>
