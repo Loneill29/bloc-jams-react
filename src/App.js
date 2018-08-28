@@ -14,7 +14,7 @@ class App extends Component {
            <Link to='/' style={{padding:'20px'}}>Home</Link>
            <Link to='/library' style={{padding:'20px'}}>Library</Link>
          </nav>
-          <h1 style={{color:'indigo'}}>Bloc Jams</h1>
+          <h1 style={{color:'indigo', fontFamily:'Roboto', fontWeight: 500}}>B l o c J a m s</h1>
         </header>
       <main>
         <Route exact path="/" component={Landing} />
